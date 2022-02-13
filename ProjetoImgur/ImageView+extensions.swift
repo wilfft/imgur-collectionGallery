@@ -19,7 +19,7 @@ extension UICollectionView {
 
 extension UIImageView {
     @discardableResult
-    func loadImageFromURL(urlString : String) -> URLSessionDataTask? {
+    func loadImageFromURL(urlString : String, onCompletion : @escaping ()-> Void ) -> URLSessionDataTask? {
         self.image = nil
        
         if let cachedImage = imageCache.object(forKey: NSString(string: urlString))   {
@@ -37,12 +37,11 @@ extension UIImageView {
                     imageCache.setObject(dowloadedImage, forKey: NSString(string: urlString))
                     DispatchQueue.main.async {
                     self.image = dowloadedImage
+                    onCompletion() 
                     } 
             }
         }
-        
         task.resume()
-       
         return task
     }
 

@@ -22,6 +22,7 @@ class GalleryViewModel  {
        self.network = network 
    }
     
+    
     func fetchImages(onCompleted: @escaping () ->  Void){ 
         DispatchQueue.global().sync { self.network.fetchImages(withPage: pageNumber) { (result: Result<[Image], RequestImagesError>) in
             switch result {

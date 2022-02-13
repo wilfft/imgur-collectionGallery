@@ -13,16 +13,14 @@ extension GalleryViewController   {
     func didFetchData() {  }
 }
 
-
 class GalleryViewController : BaseViewController<GalleryView>    {
-    
     var viewModel : GalleryViewModel!
-    var canRequestMoreItens = false
-  
+    var fetchMoreImagesIsAllowed = false
+     
     override init() {
         super.init()
         configure()
-        fetchImagesFromVM()
+        fetchImagesFromViewModel()
     }
     
     func configure(){
@@ -30,13 +28,13 @@ class GalleryViewController : BaseViewController<GalleryView>    {
         viewModel = GalleryViewModel()
     }
     
-    func fetchImagesFromVM(){
+    func fetchImagesFromViewModel(){
         viewModel.fetchImages{
             DispatchQueue.main.async {
             self.associatedView.imageGallery.reloadData()
+            self.viewModel.pageNumber += 1
             print("ItensLoaded \(self.viewModel.numberOfItemsInSection)")
         }}
-
     }
     
     required init?(coder: NSCoder) {
@@ -56,11 +54,19 @@ extension GalleryViewController : GalleryCollectionDelegate  {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        //print("willDisplay -> indexPath: \(indexPath.row) filteredImages  \(viewModel.filteredImages.count)")
-        if indexPath.row == viewModel.filteredImages.count-1 {
-            canRequestMoreItens = true
+       if indexPath.row == viewModel.filteredImages.count-1 {
+            print("\(indexPath.row)  filtered: \(viewModel.filteredImages.count-1)")
+            fetchMoreImagesIsAllowed = true
         }
-      
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (((scrollView.contentOffset.y + scrollView.frame.size.height) > scrollView.contentSize.height ) ){
+           if  fetchMoreImagesIsAllowed {
+                fetchImagesFromViewModel()
+                fetchMoreImagesIsAllowed = false
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -68,19 +74,7 @@ extension GalleryViewController : GalleryCollectionDelegate  {
         cell.setupCell(urlString: self.viewModel.filteredImages[indexPath.row].link)
         return cell
     }
-    
-    
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (((scrollView.contentOffset.y + scrollView.frame.size.height) > scrollView.contentSize.height ) ){
-            if  canRequestMoreItens {
-                viewModel.pageNumber+=1
-                fetchImagesFromVM()
-                canRequestMoreItens = false
-            }
-        }
-    }
-    
+      
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }
@@ -88,14 +82,4 @@ extension GalleryViewController : GalleryCollectionDelegate  {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }
-    
 }
-
-////    var images = [Image]() {
-//        didSet {
-//            DispatchQueue.main.async { [weak self] in
-//                self?.associatedView.imageGallery.reloadData()
-//            }
-//        }
-//    }
-//

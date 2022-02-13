@@ -15,7 +15,7 @@
 		3D191C4327AE673600428376 /* ProjetoImgurUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D191C4227AE673600428376 /* ProjetoImgurUITests.swift */; };
 		3D191C4527AE673600428376 /* ProjetoImgurUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D191C4427AE673600428376 /* ProjetoImgurUITestsLaunchTests.swift */; };
 		3D191C5227AE68D800428376 /* NetworkAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D191C5127AE68D800428376 /* NetworkAPI.swift */; };
-		3D22724E27B0986600D5135B /* ImageCache+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D22724D27B0986600D5135B /* ImageCache+extension.swift */; };
+		3D22724E27B0986600D5135B /* ImageView+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D22724D27B0986600D5135B /* ImageView+extensions.swift */; };
 		3D48D81527AF1FF7008A5800 /* GalleryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48D81427AF1FF7008A5800 /* GalleryCell.swift */; };
 		3D8ECC3027B3674200C06777 /* GalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8ECC2F27B3674200C06777 /* GalleryView.swift */; };
 		3D8ECC3227B4116800C06777 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8ECC3127B4116800C06777 /* Image.swift */; };
@@ -53,7 +53,7 @@
 		3D191C4227AE673600428376 /* ProjetoImgurUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjetoImgurUITests.swift; sourceTree = "<group>"; };
 		3D191C4427AE673600428376 /* ProjetoImgurUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjetoImgurUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3D191C5127AE68D800428376 /* NetworkAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPI.swift; sourceTree = "<group>"; };
-		3D22724D27B0986600D5135B /* ImageCache+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageCache+extension.swift"; sourceTree = "<group>"; };
+		3D22724D27B0986600D5135B /* ImageView+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageView+extensions.swift"; sourceTree = "<group>"; };
 		3D48D81427AF1FF7008A5800 /* GalleryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryCell.swift; sourceTree = "<group>"; };
 		3D8ECC2F27B3674200C06777 /* GalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryView.swift; sourceTree = "<group>"; };
 		3D8ECC3127B4116800C06777 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
@@ -120,7 +120,7 @@
 				3D8ECC2F27B3674200C06777 /* GalleryView.swift */,
 				3D48D81427AF1FF7008A5800 /* GalleryCell.swift */,
 				3D191C5127AE68D800428376 /* NetworkAPI.swift */,
-				3D22724D27B0986600D5135B /* ImageCache+extension.swift */,
+				3D22724D27B0986600D5135B /* ImageView+extensions.swift */,
 			);
 			path = ProjetoImgur;
 			sourceTree = "<group>";
@@ -280,7 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D8ECC3227B4116800C06777 /* Image.swift in Sources */,
-				3D22724E27B0986600D5135B /* ImageCache+extension.swift in Sources */,
+				3D22724E27B0986600D5135B /* ImageView+extensions.swift in Sources */,
 				3D48D81527AF1FF7008A5800 /* GalleryCell.swift in Sources */,
 				3D8ECC3027B3674200C06777 /* GalleryView.swift in Sources */,
 				3D191C2627AE673400428376 /* GalleryViewController.swift in Sources */,

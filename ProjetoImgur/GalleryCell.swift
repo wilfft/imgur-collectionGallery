@@ -32,7 +32,9 @@ class GalleryCell : UICollectionViewCell {
     }
     
     public func setupCell(urlString : String){
-        self.imageView.loadImageFromURL(urlString: urlString) 
+        self.imageView.loadImageFromURL(urlString: urlString){
+        self.stopLoading()
+        }
     }
 
     public func stopLoading(){
