@@ -7,6 +7,6 @@
 
 import UIKit
 
-struct Image : Decodable {
+struct Image : Codable {
         let link: String
 }

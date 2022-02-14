@@ -16,7 +16,8 @@ extension GalleryViewController   {
 class GalleryViewController : BaseViewController<GalleryView>    {
     var viewModel : GalleryViewModel!
     var fetchMoreImagesIsAllowed = false
-     
+    var lastPageLoaded : Int?
+    
     override init() {
         super.init()
         configure()
@@ -29,12 +30,14 @@ class GalleryViewController : BaseViewController<GalleryView>    {
     }
     
     func fetchImagesFromViewModel(){
-        viewModel.fetchImages{
-            DispatchQueue.main.async {
+        if  lastPageLoaded == nil || viewModel.pageNumber != lastPageLoaded {
+            self.lastPageLoaded = self.viewModel.pageNumber
+            viewModel.fetchImages{
+            DispatchQueue.main.async { 
             self.associatedView.imageGallery.reloadData()
             self.viewModel.pageNumber += 1
-            print("ItensLoaded \(self.viewModel.numberOfItemsInSection)")
         }}
+        }
     }
     
     required init?(coder: NSCoder) {

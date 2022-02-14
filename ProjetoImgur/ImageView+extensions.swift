@@ -8,41 +8,33 @@
 import UIKit
 
 let imageCache = NSCache<NSString, UIImage>()
-
-
-extension UICollectionView {
-    func reloadData(_ completion: @escaping () -> Void) {
-        reloadData()
-        DispatchQueue.main.async { completion() }
-    }
-}
+  
 
 extension UIImageView {
-    @discardableResult
-    func loadImageFromURL(urlString : String, onCompletion : @escaping ()-> Void ) -> URLSessionDataTask? {
-        self.image = nil
-       
-        if let cachedImage = imageCache.object(forKey: NSString(string: urlString))   {
-            self.image = cachedImage
-            return nil
-        }
-        
-        guard let url = URL(string: urlString) else {
-            return nil
-        }
+    
+    func loadImageFromURL(urlString : String, onCompletion : @escaping ()-> Void )   {
       
-        let task = URLSession.shared.dataTask(with: url){
-            data, _, _ in
-                if let data = data, let dowloadedImage = UIImage(data: data) {
-                    imageCache.setObject(dowloadedImage, forKey: NSString(string: urlString))
+        self.image = nil
+        
+        if let cachedImage = imageCache.object(forKey: urlString as NSString) {
+            self.image = cachedImage
+           }
+        
+        else {
+            NetworkAPI.shared.requestImageFromURL(urlString){
+                result in
+                switch result {
+                case .success(let data):
+                    imageCache.setObject(data, forKey: NSString(string: urlString))
                     DispatchQueue.main.async {
-                    self.image = dowloadedImage
-                    onCompletion() 
-                    } 
+                        self.image = data
+                        onCompletion()
+                    }
+                case .failure(let error):
+                    print(error)
+                }
             }
         }
-        task.resume()
-        return task
     }
-
 }
+        
