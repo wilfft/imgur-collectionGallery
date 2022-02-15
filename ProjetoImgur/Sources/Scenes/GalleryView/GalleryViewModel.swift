@@ -6,13 +6,8 @@
 //
 
 import UIKit
-//protocol Teste : AnyObject {
-//    func didFetchData()
-//
-//}
-
+ 
 class GalleryViewModel  {
-    
     private let network : ServiceProtocol
     var pageNumber = 0
     var filteredImages : [Image] = []
@@ -32,7 +27,6 @@ class GalleryViewModel  {
                  onComplete()
             }
           }
-     
     
     func filterOnlyImages(_ input : String) -> Bool{
         return input.hasSuffix(".png") || input.hasSuffix(".jpeg") || input.hasSuffix(".jpg") ? true : false

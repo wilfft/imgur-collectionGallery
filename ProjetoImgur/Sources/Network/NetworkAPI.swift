@@ -71,14 +71,11 @@ final class NetworkAPI : ServiceProtocol {
            }
            dataTask.resume()
        }
-    
-        
     }
 }
 
 extension NetworkAPI {
     private func createRequest(_ url : URL) -> URLRequest{
-        print("init Request")
         var request = URLRequest(url: url)
         request.setValue("Client-ID 1ceddedc03a5d71", forHTTPHeaderField: "Authorization")
         request.httpMethod = "GET"

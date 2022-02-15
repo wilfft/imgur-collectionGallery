@@ -7,12 +7,6 @@
 
 import UIKit
 
-
-
-extension GalleryViewController   {
-    func didFetchData() {  }
-}
-
 class GalleryViewController : BaseViewController<GalleryView>    {
     var viewModel : GalleryViewModel!
     var fetchMoreImagesIsAllowed = false
@@ -20,8 +14,13 @@ class GalleryViewController : BaseViewController<GalleryView>    {
     
     override init() {
         super.init()
+        viewModel = GalleryViewModel()
         configure()
         fetchImagesFromViewModel()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     func configure(){
@@ -33,20 +32,15 @@ class GalleryViewController : BaseViewController<GalleryView>    {
         if  lastPageLoaded == nil || viewModel.pageNumber != lastPageLoaded {
             self.lastPageLoaded = self.viewModel.pageNumber
             viewModel.fetchImages{
-            DispatchQueue.main.async { 
-            self.associatedView.imageGallery.reloadData()
-            self.viewModel.pageNumber += 1
-        }}
+                DispatchQueue.main.async {
+                    self.associatedView.imageGallery.reloadData()
+                    self.viewModel.pageNumber += 1
+                }}
         }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    } 
 }
 
 extension GalleryViewController : GalleryCollectionDelegate  {
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.numberOfItemsInSection
     }
@@ -57,15 +51,14 @@ extension GalleryViewController : GalleryCollectionDelegate  {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-       if indexPath.row == viewModel.filteredImages.count-1 {
-            print("\(indexPath.row)  filtered: \(viewModel.filteredImages.count-1)")
+        if indexPath.row == viewModel.filteredImages.count-1 {
             fetchMoreImagesIsAllowed = true
         }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (((scrollView.contentOffset.y + scrollView.frame.size.height) > scrollView.contentSize.height ) ){
-           if  fetchMoreImagesIsAllowed {
+            if  fetchMoreImagesIsAllowed {
                 fetchImagesFromViewModel()
                 fetchMoreImagesIsAllowed = false
             }
@@ -77,7 +70,7 @@ extension GalleryViewController : GalleryCollectionDelegate  {
         cell.setupCell(urlString: self.viewModel.filteredImages[indexPath.row].link)
         return cell
     }
-      
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }

@@ -8,8 +8,7 @@
 import UIKit
 
 class GalleryCell : UICollectionViewCell {
-    static let indentifier = "Cell"
-    private var task : URLSessionDataTask!
+    static let indentifier = "Cell" 
     
     private lazy var loading : UIActivityIndicatorView = {
         let loading = UIActivityIndicatorView(style: .medium)
@@ -17,7 +16,7 @@ class GalleryCell : UICollectionViewCell {
         return loading
     }()
     
-    private lazy var imageView : UIImageView = {
+      lazy var imageView : UIImageView = {
         let img = UIImageView()
         img.translatesAutoresizingMaskIntoConstraints = false
         img.contentMode = .scaleToFill
