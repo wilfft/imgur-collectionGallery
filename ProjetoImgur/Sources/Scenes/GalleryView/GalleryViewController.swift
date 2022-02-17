@@ -48,7 +48,9 @@ extension GalleryViewController : GalleryCollectionDelegate  {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-     if indexPath.row == viewModel.numberOfItemsInSection-1     {
+        // fixForFirstLoad foi usado pq ao preencher a collection com 4 itens, a view nao chega a tocar o scroll, dai houve a necessidade de startar nessa forma.
+        
+        if viewModel.fixForFirstLoad(indexPath)    {
             fetchImagesFromViewModel()
         }
         viewModel.cellwillDisplayIsAllowed(indexPath)

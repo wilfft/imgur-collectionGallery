@@ -9,20 +9,23 @@ import UIKit
 
 class GalleryViewModel  {
     private let network : ServiceProtocol
-      let minimumInteritemSpacingForSectionAt : CGFloat = 2
-      let minimumLineSpacingForSectionAt : CGFloat = 2
+    let minimumInteritemSpacingForSectionAt : CGFloat = 2
+    let minimumLineSpacingForSectionAt : CGFloat = 2
     private let collectionViewRows :  CGFloat = 4
     private var cellSizeFormula :  CGFloat {
         minimumInteritemSpacingForSectionAt * collectionViewRows / collectionViewRows
     }
-    
     var currentPage = 0
     var filteredImages : [Image] = []
     var numberOfItemsInSection: Int { return filteredImages.count }
     var allowFetchMoreImages = true
     var lastPageLoaded : Int?
     
-    
+    func fixForFirstLoad(_ indexPath : IndexPath) -> Bool {
+        
+        return indexPath.row == numberOfItemsInSection-1
+        
+    }
     
     func cellwillDisplayIsAllowed(_ indexPath: IndexPath)   {
         if indexPath.row == self.numberOfItemsInSection-1 {
