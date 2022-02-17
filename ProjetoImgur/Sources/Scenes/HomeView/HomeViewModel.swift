@@ -9,7 +9,6 @@ import Foundation
 
 
 final class HomeViewModel{
-    
-    var coordinator : HomeCoordinator?
+      var coordinator : HomeCoordinator?
     
 }

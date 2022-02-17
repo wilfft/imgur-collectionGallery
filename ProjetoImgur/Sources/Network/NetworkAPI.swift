@@ -27,10 +27,12 @@ final class NetworkAPI : ServiceProtocol {
    static let shared = NetworkAPI()
     
     func requestImagesListFromPage(page: Int, _ onComplete: @escaping (Result<ImgurResponse, RequestImagesError>) -> Void) {
-        guard let url = URL(string: "https://api.imgur.com/3/gallery/r/cats/time/month/" + String(page)) else {
+        guard let url = URL(string: "https://api.imgur.com/3/gallery/r/cats/time/month/" + String(page))
+       else {
             onComplete(.failure(RequestImagesError.unavailable))
             return
         }
+        print(url)
         self.requestObject(url, onComplete: onComplete)
     }
    
