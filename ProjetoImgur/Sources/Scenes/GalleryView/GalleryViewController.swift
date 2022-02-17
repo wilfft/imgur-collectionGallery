@@ -48,12 +48,16 @@ extension GalleryViewController : GalleryCollectionDelegate  {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+     if indexPath.row == viewModel.numberOfItemsInSection-1     {
+            fetchImagesFromViewModel()
+        }
         viewModel.cellwillDisplayIsAllowed(indexPath)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if viewModel.verifyScrollViewDidEndAndFetchIsAllowed(scrollView) {
+         if viewModel.verifyScrollViewDidEndAndFetchIsAllowed(scrollView) {
                fetchImagesFromViewModel()
+            
             }
         }
     

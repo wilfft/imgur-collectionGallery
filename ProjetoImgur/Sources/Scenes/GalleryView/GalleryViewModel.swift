@@ -11,7 +11,7 @@ class GalleryViewModel  {
     private let network : ServiceProtocol
       let minimumInteritemSpacingForSectionAt : CGFloat = 2
       let minimumLineSpacingForSectionAt : CGFloat = 2
-    private let collectionViewRows :  CGFloat = 3
+    private let collectionViewRows :  CGFloat = 4
     private var cellSizeFormula :  CGFloat {
         minimumInteritemSpacingForSectionAt * collectionViewRows / collectionViewRows
     }
@@ -50,7 +50,6 @@ class GalleryViewModel  {
     func verifyScrollViewDidEndAndFetchIsAllowed(_ scrollView: UIScrollView) -> Bool{
         return ((scrollView.contentOffset.y + scrollView.frame.size.height) > scrollView.contentSize.height ) && self.allowFetchMoreImages
     }
-    
     
     func customCell(_ collectionView : UICollectionView, _ indexPath : IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GalleryCell.indentifier, for: indexPath) as! GalleryCell
