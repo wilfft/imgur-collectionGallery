@@ -40,19 +40,15 @@ class GalleryViewController : BaseViewController<GalleryView>    {
 
 extension GalleryViewController : GalleryCollectionDelegate  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return viewModel.numberOfItemsInSection
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         return viewModel.cellLayoutSize(collectionView)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-         
         viewModel.cellwillDisplayIsAllowed(indexPath)
-         
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

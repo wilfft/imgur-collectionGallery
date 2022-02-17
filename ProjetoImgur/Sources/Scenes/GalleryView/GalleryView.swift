@@ -14,7 +14,32 @@ protocol GalleryCollectionDelegate :   UICollectionViewDataSource , UICollection
 final class GalleryView: UIView, ViewCode {
     
     weak var delegate : GalleryCollectionDelegate?
-  
+    
+    
+   lazy var contentSize = CGSize(width: self.frame.width, height: self.frame.height + 400)
+    
+    lazy var scrollView : UIScrollView = {
+        let scrollView = UIScrollView(frame: .zero)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.backgroundColor = .red
+      //  scrollView.frame = self.bounds
+     scrollView.contentSize = contentSize
+        scrollView.autoresizingMask = .flexibleHeight
+        scrollView.showsVerticalScrollIndicator = true
+        
+        return scrollView
+        
+    }()
+    
+    lazy var containerView : UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+  //      view.frame.size = contentSize
+        view.backgroundColor = .blue
+        return view
+        
+    }()
+    
     lazy var imageGallery : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -42,15 +67,27 @@ final class GalleryView: UIView, ViewCode {
      
     func setupHierarchy() {
         self.addSubview(imageGallery)
+ 
+  //      containerView.addSubview(imageGallery)
     }
     
     func setupConstraints(){
-        NSLayoutConstraint.activate([  imageGallery.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+        NSLayoutConstraint.activate([
+//            scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+//                                       scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+//                                       scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+//                                       scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+//                                       containerView.topAnchor.constraint(equalTo: self.topAnchor),
+//                                       containerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+//                                       containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+//                                       containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+                                       imageGallery.topAnchor.constraint(equalTo: self.topAnchor),
                                        imageGallery.leadingAnchor.constraint(equalTo: self.leadingAnchor),
                                        imageGallery.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-                                       imageGallery.bottomAnchor.constraint(equalTo: self.bottomAnchor) ]
-        )
-    }
+                                       imageGallery.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+
+                                    ]
+    )   }
     
     func setupConfiguration() {
         self.backgroundColor = .white

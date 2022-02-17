@@ -6,18 +6,25 @@
 //
 
 import UIKit
- 
+
 class GalleryViewModel  {
     private let network : ServiceProtocol
+      let minimumInteritemSpacingForSectionAt : CGFloat = 2
+      let minimumLineSpacingForSectionAt : CGFloat = 2
+    private let collectionViewRows :  CGFloat = 3
+    private var cellSizeFormula :  CGFloat {
+        minimumInteritemSpacingForSectionAt * collectionViewRows / collectionViewRows
+    }
+    
     var currentPage = 0
     var filteredImages : [Image] = []
     var numberOfItemsInSection: Int { return filteredImages.count }
     var allowFetchMoreImages = true
     var lastPageLoaded : Int?
-    var minimumInteritemSpacingForSectionAt : CGFloat = 2
-    var minimumLineSpacingForSectionAt : CGFloat = 2
     
-        func cellwillDisplayIsAllowed(_ indexPath: IndexPath)   {
+    
+    
+    func cellwillDisplayIsAllowed(_ indexPath: IndexPath)   {
         if indexPath.row == self.numberOfItemsInSection-1 {
             allowFetchMoreImages = true
         }
@@ -25,25 +32,25 @@ class GalleryViewModel  {
     
     func fetchImages(onComplete: @escaping () ->  Void){
         if lastPageLoaded == nil || currentPage != lastPageLoaded {
-         lastPageLoaded = currentPage
-       
-         self.network.requestImagesListFromPage(page: currentPage){ (result: Result<ImgurResponse, RequestImagesError>) in
+            lastPageLoaded = currentPage
+            
+            self.network.requestImagesListFromPage(page: currentPage){ (result: Result<ImgurResponse, RequestImagesError>) in
                 switch result {
                 case let .success(images):
-                self.filteredImages += images.data.filter{ self.filterOnlyImages($0.link) }
+                    self.filteredImages += images.data.filter{ self.filterOnlyImages($0.link) }
                 case let .failure(error): print(error)
+                }
+                self.currentPage += 1
+                onComplete()
             }
-             self.currentPage += 1
-             onComplete()
-          }
-        self.allowFetchMoreImages = false
+            self.allowFetchMoreImages = false
         }
-        }
-     
+    }
+    
     func verifyScrollViewDidEndAndFetchIsAllowed(_ scrollView: UIScrollView) -> Bool{
         return ((scrollView.contentOffset.y + scrollView.frame.size.height) > scrollView.contentSize.height ) && self.allowFetchMoreImages
-        }
-
+    }
+    
     
     func customCell(_ collectionView : UICollectionView, _ indexPath : IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GalleryCell.indentifier, for: indexPath) as! GalleryCell
@@ -57,11 +64,11 @@ class GalleryViewModel  {
     }
     
     func cellLayoutSize(_ collectionView : UICollectionView) -> CGSize {
-        let size = (collectionView.bounds.width - 4) / 3
+        let size = (collectionView.bounds.width - minimumInteritemSpacingForSectionAt * collectionViewRows) / collectionViewRows
         
         return  CGSize(width: size ,  height: size)
     }
-         
+    
     
     func filterOnlyImages(_ input : String) -> Bool{
         return input.hasSuffix(".png") || input.hasSuffix(".jpeg") || input.hasSuffix(".jpg") ? true : false
